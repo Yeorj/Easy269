@@ -27,7 +27,17 @@ You should output the BASIC indented by SpaceCorp guidelines.
     ······PRINT "FIZZBUZZ"
     ··»»ENDIF
     »»»»·NEXT
-  
-  
 
-
+#Challenge Output:
+        VAR I
+        FOR I=1 TO 31
+        ····IF !(I MOD 3) THEN
+        ········PRINT "FIZZ"
+        ····ENDIF
+        ····IF !(I MOD 5) THEN
+        ········PRINT "BUZZ"
+        ····ENDIF
+        ····IF (I MOD 3) && (I MOD 5) THEN
+        ········PRINT "FIZZBUZZ"
+        ····ENDIF
+        NEXT
