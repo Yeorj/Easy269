@@ -4,8 +4,12 @@
 
 #define NUM_OF_ARGS 3
 #define ASCII_NUM 48
+#define SPACE 32
 
 int getNum(FILE*);
+char* getWhiteSpace(FILE*, int*);
+void spacing(FILE*, FILE*, int*, char*, int, int timesCalled = 0);
+bool isBlock(FILE*, char *, int*);
 
 int main(int argc, char* argv[]){
 
@@ -22,7 +26,9 @@ int main(int argc, char* argv[]){
     return EXIT_FAILURE;
   }
 
-  printf("The number in the file is %d\n", getNum(input));
+  int lenOfSpace = 0;
+  char * whitespace = getWhiteSpace(input, &lenOfSpace);
+
 
 
   fclose(input);
@@ -44,7 +50,49 @@ int getNum(FILE * input){
     int addNum = stringNum[numOfDec - lcv] - ASCII_NUM;
     retVal += addNum * pow(10.0, (double)(lcv - 1.0));
   }
-
   return retVal;
+}
+
+char* getWhiteSpace(FILE * input, int* len){
+  char* whitespace = NULL;
+  size_t req = 0; //Requirement needed, but not used
+  *len = getline(&whitespace, &req, input) - 1;
+
+  return whitespace;
+}
+
+void spacing(FILE * input, FILE * output, int * numLines, char* whitespace, int lenOfSpace, int timesCalled){
+
+  int currChar = 0;
+  char* currString;
+  int* lenOfString;
+
+  while ( currChar = fgetc(input)){
+    if (currChar = '.' || currChar == "»"){
+      continue;
+    }else if (isBlock(input, currString, lenOfString)){
+      int lcv =0;
+      for(;lcv < *lenOfString; lcv++){
+          /*FPUT each Char*/
+      }
+    }
+
+  }
+
+}
+
+bool isBlock(FILE * input, char * retString, int* lenString){
+
+  int currChar = 0;
+  *lenString = 0;
+
+  while (currChar = fgetc(input) != SPACE){
+    lenString++;
+  }
+  for (currChar = 0; currChar < *lenString; currChar++){
+    if(){
+
+    }
+  }
 
 }
