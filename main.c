@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
+#include <stdbool.h>
 
 #define NUM_OF_ARGS 3
 #define ASCII_NUM 48
@@ -8,8 +10,7 @@
 
 int getNum(FILE*);
 char* getWhiteSpace(FILE*, int*);
-void spacing(FILE*, FILE*, int*, char*, int, int timesCalled = 0);
-bool isBlock(FILE*, char *, int*);
+char* isBlock(FILE*, int*);
 
 int main(int argc, char* argv[]){
 
@@ -26,9 +27,9 @@ int main(int argc, char* argv[]){
     return EXIT_FAILURE;
   }
 
+  int numLines = getNum(input);
   int lenOfSpace = 0;
   char * whitespace = getWhiteSpace(input, &lenOfSpace);
-
 
 
   fclose(input);
@@ -41,7 +42,7 @@ int main(int argc, char* argv[]){
 /* Is used to confirm how many lines there are in the file. */
 int getNum(FILE * input){
   char *stringNum = NULL;
-  size_t len = 0;
+  size_t len = 0; // NOT USED, BUT REQUIRED
   int numOfDec = getline(&stringNum, &len, input) - 1; // Minus 1 b/c newline
   int retVal = 0;
   int lcv = 1;
@@ -61,38 +62,25 @@ char* getWhiteSpace(FILE * input, int* len){
   return whitespace;
 }
 
-void spacing(FILE * input, FILE * output, int * numLines, char* whitespace, int lenOfSpace, int timesCalled){
+/* Confirms if is a block and adds spacing */
+char* isBlock(FILE* input, int* spacing){
+  char* retString = NULL;
+  size_t throwaway = 0;
+  const char IF[] = "IF";
+  const char FOR[] = "FOR";
+  const char ENDIF[] = "ENDIF";
+  const char NEXT[] = "NEXT";
 
-  int currChar = 0;
-  char* currString;
-  int* lenOfString;
+  getline(&retString, &throwaway, input);
 
-  while ( currChar = fgetc(input)){
-    if (currChar = '.' || currChar == "»"){
-      continue;
-    }else if (isBlock(input, currString, lenOfString)){
-      int lcv =0;
-      for(;lcv < *lenOfString; lcv++){
-          /*FPUT each Char*/
-      }
+  if(strstr(retString, &IF) || strstr(retString, &FOR)){
+    if(strstr(retString, &ENDIF)){
+      *spacing -= 1;
+    }else{
+      *spacing += 1;
     }
-
+  }else if(strstr(retString, &NEXT)){
+      *spacing -= 1;
   }
-
-}
-
-bool isBlock(FILE * input, char * retString, int* lenString){
-
-  int currChar = 0;
-  *lenString = 0;
-
-  while (currChar = fgetc(input) != SPACE){
-    lenString++;
-  }
-  for (currChar = 0; currChar < *lenString; currChar++){
-    if(){
-
-    }
-  }
-
+  return retString;
 }
